@@ -35,16 +35,17 @@ function MailListener(options) {
     connTimeout: options.connTimeout || null,
     authTimeout: options.authTimeout || null,
     debug: options.debug || null
-  });
-
-  this.imap.once('ready', imapReady.bind(this));
-  this.imap.once('close', imapClose.bind(this));
+  }); 
+  
   this.imap.on('error', imapError.bind(this));
 }
 
 util.inherits(MailListener, EventEmitter);
 
 MailListener.prototype.start = function() {
+  this.imap.once('ready', imapReady.bind(this));
+  this.imap.once('close', imapClose.bind(this));
+  
   this.imap.connect();
 };
 
